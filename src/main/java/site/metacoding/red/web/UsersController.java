@@ -1,6 +1,5 @@
 package site.metacoding.red.web;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -15,7 +14,7 @@ import site.metacoding.red.web.dto.request.users.LoginDto;
 
 @RequiredArgsConstructor
 @Controller
-public class UsersController {
+public class UsersController{
 	
 	private final HttpSession session; // 스프링이 서버시작시에 IoC 컨테이너에 보관함.
 	private final UsersDao usersDao;
@@ -29,6 +28,7 @@ public class UsersController {
 	@PostMapping("/login") // 로그인만 예외로 select인데 post로 함.
 	public String login(LoginDto loginDto) {
 		Users usersPS = usersDao.login(loginDto);
+	
 		if(usersPS != null) { // 인증됨.
 			session.setAttribute("principal", usersPS);
 			return "redirect:/";
