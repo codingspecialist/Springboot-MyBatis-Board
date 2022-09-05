@@ -3,31 +3,47 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="site.metacoding.red.domain.boards.BoardsDao">
-	
+
+	<select id="paging" resultType="site.metacoding.red.web.dto.response.boards.PagingDto">
+		select 
+		totalCount,
+		ceil(totalCount/10) totalPage,
+		currentPage,
+		decode(currentPage, ceil(totalCount/10)-1, 1, 0) last,
+		decode(currentPage, 0, 1, 0) first
+		from
+		(
+		select count(*) totalCount, #{page} currentPage from boards
+		)
+	</select>
+
 	<insert id="insert">
-		INSERT INTO boards(id, title, content, usersId, createdAt) 
+		INSERT INTO boards(id, title, content, usersId,
+		createdAt)
 		VALUES(boards_seq.nextval, #{title}, #{content}, #{usersId}, sysdate)
 	</insert>
 
-	<select id="findById" resultType="site.metacoding.red.domain.boards.Boards">
+	<select id="findById"
+		resultType="site.metacoding.red.domain.boards.Boards">
 		SELECT id, title, content FROM boards WHERE id=#{id}
 	</select>
-	
-	<select id="findAll" resultType="site.metacoding.red.web.dto.response.boards.MainDto">
+
+	<select id="findAll"
+		resultType="site.metacoding.red.web.dto.response.boards.MainDto">
 		SELECT b.id, b.title, u.username
-		FROM boards b 
-		INNER JOIN users u 
-		ON b.usersId = u.id 
+		FROM boards b
+		INNER JOIN users u
+		ON b.usersId = u.id
 		ORDER BY b.id DESC
 		OFFSET #{startNum} ROWS FETCH NEXT 10 ROWS ONLY
 	</select>
-	
+
 	<update id="update">
-	
+
 	</update>
-	
+
 	<delete id="delete">
-	
+
 	</delete>
 
 </mapper>

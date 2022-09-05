@@ -23,7 +23,13 @@
 		</tbody>
 	</table>
 
-
+	<div style="background-color: 'grey' ;">
+		<h3>totalCount : ${paging.totalCount}</h3>
+		<h3>totalPage : ${paging.totalPage}</h3>
+		<h3>currentPage : ${paging.currentPage}</h3>
+		<h3>isLast : ${paging.last}</h3>
+		<h3>isFirst : ${paging.first}</h3>
+	</div>
 </div>
 
 <%@ include file="../layout/footer.jsp"%>
