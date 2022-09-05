@@ -23,11 +23,6 @@
 		</tbody>
 	</table>
 
-	<h2>${param.page}</h2>
-	<ul class="pagination">
-		<li class="page-item disabled"><a class="page-link" href="">Previous</a></li>
-		<li class="page-item"><a class="page-link" href="/?page=${param.page + 1}">Next</a></li>
-	</ul>
 
 </div>
 
