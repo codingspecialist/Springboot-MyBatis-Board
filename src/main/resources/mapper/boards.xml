@@ -5,7 +5,8 @@
 <mapper namespace="site.metacoding.red.domain.boards.BoardsDao">
 	
 	<insert id="insert">
-		
+		INSERT INTO boards(id, title, content, usersId, createdAt) 
+		VALUES(boards_seq.nextval, #{title}, #{content}, #{usersId}, sysdate)
 	</insert>
 
 	<select id="findById" resultType="site.metacoding.red.domain.boards.Boards">
