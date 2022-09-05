@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%@ include file="../layout/header.jsp"%>
 
@@ -13,12 +12,14 @@
 			</tr>
 		</thead>
 		<tbody>
-		    <!-- 여기에 forEach 필요하겠죠? -->
-			<tr>
-				<td>1</td>
-				<td><a href="/boards/1">스프링1강</a></td>
-				<td>ssar</td>
-			</tr>
+			<c:forEach var="boards" items="${boardsList}">
+				<tr>
+					<td>${boards.id}</td>
+					<td><a href="/boards/${boards.id}">${boards.title}</a></td>
+					<td>${boards.username}</td>
+				</tr>
+			</c:forEach>
+
 		</tbody>
 	</table>
 
