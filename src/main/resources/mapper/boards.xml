@@ -19,6 +19,7 @@
 		INNER JOIN users u 
 		ON b.usersId = u.id 
 		ORDER BY b.id DESC
+		OFFSET #{startNum} ROWS FETCH NEXT 10 ROWS ONLY
 	</select>
 	
 	<update id="update">
