@@ -23,18 +23,22 @@
 		</tbody>
 	</table>
 
-	<ul class="pagination">
-		<li class='page-item ${paging.first ? "disabled" : ""}'><a class="page-link" href="?page=${paging.currentPage-1}">Prev</a></li>
-		
-		<c:forEach var="num" begin="${paging.startPageNum}" end="${paging.lastPageNum}" step="1">
-			<li class='page-item ${paging.currentPage == num-1 ? "active" : ""}'><a class='page-link' href="?page=${num-1}">${num}</a></li>
-		</c:forEach>
-		
-		<li class='page-item ${paging.last ? "disabled" : ""}'  ><a class="page-link" href="?page=${paging.currentPage+1}">Next</a></li>
-	
-	</ul>
+	<div class="d-flex justify-content-center">
+		<ul class="pagination">
+			<li class='page-item ${paging.first ? "disabled" : ""}'><a class="page-link"
+				href="?page=${paging.currentPage-1}">Prev</a></li>
 
-	<div style="background-color: grey;">
+			<c:forEach var="num" begin="${paging.startPageNum}" end="${paging.lastPageNum}" step="1">
+				<li class='page-item ${paging.currentPage == num-1 ? "active" : ""}'><a class='page-link'
+					href="?page=${num-1}">${num}</a></li>
+			</c:forEach>
+
+			<li class='page-item ${paging.last ? "disabled" : ""}'><a class="page-link"
+				href="?page=${paging.currentPage+1}">Next</a></li>
+		</ul>
+	</div>
+
+	<%-- 	<div style="background-color: grey;">
 		<h3>blockCount : ${paging.blockCount}</h3>
 		<h3>currentBlock : ${paging.currentBlock}</h3>
 		<h3>startPageNum : ${paging.startPageNum}</h3>
@@ -44,7 +48,7 @@
 		<h3>currentPage : ${paging.currentPage}</h3>
 		<h3>isLast : ${paging.last}</h3>
 		<h3>isFirst : ${paging.first}</h3>
-	</div>
+	</div> --%>
 </div>
 
 <%@ include file="../layout/footer.jsp"%>
