@@ -6,8 +6,8 @@ import lombok.Setter;
 @Setter
 @Getter
 public class PagingDto {
-	private Integer blockPage; // 변수
-	private Integer blockPageCount; //  상수  한페이지에 페이지 넘수 개수(5) 1-5, 6-10
+	private Integer blockCount; //  상수  한페이지에 페이지 넘수 개수(5) 1-5, 6-10
+	private Integer currentBlock; // 변수
 	private Integer startPageNum; // 변수 1 -> 6 -> 11
 	private Integer lastPageNum; // 변수 5 -> 10 -> 15
 	private Integer totalCount;

@@ -26,8 +26,8 @@
 	<ul class="pagination">
 		<li class='page-item ${paging.first ? "disabled" : ""}'><a class="page-link" href="?page=${paging.currentPage-1}">Prev</a></li>
 		
-		<c:forEach var="num" begin="1" end="${paging.totalPage}" step="1">
-			<li class="page-item"><a class="page-link" href="?page=${num-1}">${num}</a></li>
+		<c:forEach var="num" begin="${paging.startPageNum}" end="${paging.lastPageNum}" step="1">
+			<li class='page-item ${paging.currentPage == num-1 ? "active" : ""}'><a class='page-link' href="?page=${num-1}">${num}</a></li>
 		</c:forEach>
 		
 		<li class='page-item ${paging.last ? "disabled" : ""}'  ><a class="page-link" href="?page=${paging.currentPage+1}">Next</a></li>
@@ -35,6 +35,10 @@
 	</ul>
 
 	<div style="background-color: grey;">
+		<h3>blockCount : ${paging.blockCount}</h3>
+		<h3>currentBlock : ${paging.currentBlock}</h3>
+		<h3>startPageNum : ${paging.startPageNum}</h3>
+		<h3>lastPageNum : ${paging.lastPageNum}</h3>
 		<h3>totalCount : ${paging.totalCount}</h3>
 		<h3>totalPage : ${paging.totalPage}</h3>
 		<h3>currentPage : ${paging.currentPage}</h3>
