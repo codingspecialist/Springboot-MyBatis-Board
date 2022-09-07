@@ -25,72 +25,70 @@ public class BoardsController {
 	private final BoardsDao boardsDao;
 	// @PostMapping("/boards/{id}/delete")
 	// @PostMapping("/boards/{id}/update")
-	
+
 	@PostMapping("/boards")
 	public String writeBoards(WriteDto writeDto) {
 		// 1번 세션에 접근해서 세션값을 확인한다. 그때 Users로 다운캐스팅하고 키값은 principal로 한다.
 		Users principal = (Users) session.getAttribute("principal");
-		
+
 		// 2번 pricipal null인지 확인하고 null이면 loginForm 리다이렉션해준다.
-		if(principal == null) {
+		if (principal == null) {
 			return "redirect:/loginForm";
 		}
-		
+
 		// 3번 BoardsDao에 접근해서 insert 메서드를 호출한다.
 		// 조건 : dto를 entity로 변환해서 인수로 담아준다.
 		// 조건 : entity에는 세션의 principal에 getId가 필요하다.
 		boardsDao.insert(writeDto.toEntity(principal.getId()));
-		
+
 		return "redirect:/";
 	}
-	
+
 	// http://localhost:8000/
 	// http://localhost:8000/?page=0
-	@GetMapping({"/", "/boards"})
+	@GetMapping({ "/", "/boards" })
 	public String getBoardList(Model model, Integer page) { // 0 -> 0, 1->10, 2->20
-		if(page == null) page = 0;
+		if (page == null)
+			page = 0;
 		int startNum = page * 3; // 1. 수정함
 
 		List<MainDto> boardsList = boardsDao.findAll(startNum);
 		PagingDto paging = boardsDao.paging(page);
-		
+
 		// 2. 수정함
-		int blockCount = 5;
-		int currentBlock = page / 5; 
-		int startPageNum = 1; 
-		if(page != 0) startPageNum = 1 + blockCount*currentBlock;
-		int lastPageNum = 5;
-		if(page != 0) {
-			lastPageNum = 5 + blockCount*currentBlock;
-			
-			if(paging.getTotalPage() < lastPageNum) {
-				lastPageNum = paging.getTotalPage();
-			}
-		} 
-		
+		final int blockCount = 5;
+
+		int currentBlock = page / blockCount;
+		int startPageNum = 1 + blockCount * currentBlock;
+		int lastPageNum = 5 + blockCount * currentBlock;
+
+		if (paging.getTotalPage() < lastPageNum) {
+			lastPageNum = paging.getTotalPage();
+		}
+
 		paging.setBlockCount(blockCount);
 		paging.setCurrentBlock(currentBlock);
 		paging.setStartPageNum(startPageNum);
 		paging.setLastPageNum(lastPageNum);
-		
+
 		model.addAttribute("boardsList", boardsList);
 		model.addAttribute("paging", paging);
 		return "boards/main";
 	}
-	
+
 	@GetMapping("/boards/{id}")
 	public String getBoardList(@PathVariable Integer id, Model model) {
 		model.addAttribute("boards", boardsDao.findById(id));
 		return "boards/detail";
 	}
-	
+
 	@GetMapping("/boards/writeForm")
 	public String writeForm() {
 		Users principal = (Users) session.getAttribute("principal");
-		if(principal == null) {
+		if (principal == null) {
 			return "redirect:/loginForm";
 		}
-		
+
 		return "boards/writeForm";
 	}
 }
