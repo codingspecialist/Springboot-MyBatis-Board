@@ -53,6 +53,9 @@ public class BoardsController {
 
 		List<MainDto> boardsList = boardsDao.findAll(startNum);
 		PagingDto paging = boardsDao.paging(page);
+		
+		// paging.set머시기로 dto 완성
+		
 		model.addAttribute("boardsList", boardsList);
 		model.addAttribute("paging", paging);
 		return "boards/main";
