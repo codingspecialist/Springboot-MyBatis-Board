@@ -133,14 +133,12 @@ public class BoardsController {
 	// 1번째 ?page=0&keyword=스프링
 	@GetMapping({ "/", "/boards" })
 	public String getBoardList(Model model, Integer page, String keyword) { // 0 -> 0, 1->10, 2->20
-		System.out.println("dddddddddd : keyword : "+keyword);
 		if (page == null) {
 			page = 0;
 		}
 		int startNum = page * 3;
 			
 		if (keyword == null || keyword.isEmpty()) {
-			System.out.println("=================================");
 			List<MainDto> boardsList = boardsDao.findAll(startNum);
 			PagingDto paging = boardsDao.paging(page, null);
 			paging.makeBlockInfo(keyword);
