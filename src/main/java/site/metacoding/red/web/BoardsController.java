@@ -46,16 +46,16 @@ public class BoardsController {
 		if (principal.getId() != boardsPS.getUsersId()) {
 			return "errors/badPage";
 		}
-		
+
 		// 2. 변경
 		boardsPS.글수정(updateDto);
-		
+
 		// 3. 수행
 		boardsDao.update(boardsPS);
-		
-		return "redirect:/boards/"+id;
+
+		return "redirect:/boards/" + id;
 	}
-	
+
 	@GetMapping("/boards/{id}/updateForm")
 	public String updateForm(@PathVariable Integer id, Model model) {
 		Boards boardsPS = boardsDao.findById(id);
@@ -73,7 +73,7 @@ public class BoardsController {
 		if (principal.getId() != boardsPS.getUsersId()) {
 			return "errors/badPage";
 		}
-		
+
 		model.addAttribute("boards", boardsPS);
 
 		return "boards/updateForm";
@@ -130,20 +130,35 @@ public class BoardsController {
 		return "redirect:/";
 	}
 
+	// 1번째 ?page=0&keyword=스프링
 	@GetMapping({ "/", "/boards" })
-	public String getBoardList(Model model, Integer page) { // 0 -> 0, 1->10, 2->20
-		if (page == null)
+	public String getBoardList(Model model, Integer page, String keyword) { // 0 -> 0, 1->10, 2->20
+		System.out.println("dddddddddd : keyword : "+keyword);
+		if (page == null) {
 			page = 0;
+		}
 		int startNum = page * 3;
+			
+		if (keyword == null || keyword.isEmpty()) {
+			System.out.println("=================================");
+			List<MainDto> boardsList = boardsDao.findAll(startNum);
+			PagingDto paging = boardsDao.paging(page, null);
+			paging.makeBlockInfo(keyword);
 
-		List<MainDto> boardsList = boardsDao.findAll(startNum);
-		PagingDto paging = boardsDao.paging(page);
-		paging.makeBlockInfo();
-
-		model.addAttribute("boardsList", boardsList);
-		model.addAttribute("paging", paging);
+			model.addAttribute("boardsList", boardsList);
+			model.addAttribute("paging", paging);	
+		} else {
+			
+			List<MainDto> boardsList = boardsDao.findSearch(startNum, keyword);
+			PagingDto paging = boardsDao.paging(page, keyword);
+			paging.makeBlockInfo(keyword);
+			
+			model.addAttribute("boardsList", boardsList);
+			model.addAttribute("paging", paging);
+		}
 
 		return "boards/main";
+	
 	}
 
 	@GetMapping("/boards/{id}")
