@@ -41,6 +41,11 @@ public class UsersController{
 	
 	@PostMapping("/join")
 	public String join(JoinDto joinDto) {
+		System.out.println("/join 호출시 ================");
+		System.out.println("username : "+joinDto.getUsername());
+		System.out.println("password : "+joinDto.getPassword());
+		System.out.println("email : "+joinDto.getEmail());
+		System.out.println("================");
 		usersDao.insert(joinDto);
 		return "redirect:/loginForm";
 	}

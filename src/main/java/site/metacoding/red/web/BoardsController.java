@@ -141,12 +141,11 @@ public class BoardsController {
 		if (keyword == null || keyword.isEmpty()) {
 			List<MainDto> boardsList = boardsDao.findAll(startNum);
 			PagingDto paging = boardsDao.paging(page, null);
-			paging.makeBlockInfo(keyword);
+			paging.makeBlockInfo();
 
 			model.addAttribute("boardsList", boardsList);
 			model.addAttribute("paging", paging);	
-		} else {
-			
+		} else {	
 			List<MainDto> boardsList = boardsDao.findSearch(startNum, keyword);
 			PagingDto paging = boardsDao.paging(page, keyword);
 			paging.makeBlockInfo(keyword);
